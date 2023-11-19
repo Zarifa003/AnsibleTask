@@ -1,0 +1,21 @@
+---
+- name: Deploy Node.js Application to EC2 Instance
+  hosts: ec2_instances
+  become: yes  # Assuming you need root privileges for some operations
+  tasks:
+    - name: Transfer application code to EC2 instance
+      ansible.builtin.copy:
+        src: /etc/ansible/ansibletask/
+        dest: /home/ec2-user/mynodeapp/
+        recursive: yes
+
+    - name: Install npm dependencies
+      ansible.builtin.shell:
+        cmd: npm install
+        chdir: /home/ec2-user/mynodeapp
+
+    - name: Start Node.js application
+      ansible.builtin.shell:
+        cmd: nohup node server.js > app.log 2>&1 &
+        chdir: /home/ec2-user/mynodeapp
+

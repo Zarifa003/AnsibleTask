@@ -1,0 +1,26 @@
+---
+- name: Launch EC2 Instance
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Create an EC2 instance
+      ec2:
+        key_name: webserver2
+        instance_type: t3.micro
+        image: ami-081dce9b7a9078540
+        wait: yes
+        region: eu-north-1  # Make sure this is just the region, not the availability zone
+        group: ansible  # Security group name
+        vpc_subnet_id: subnet-081bd5660f51f8353
+        assign_public_ip: yes
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        instance_tags:
+          Name: NodeJS-Web-Server
+        volumes:
+          - device_name: /dev/sda1
+            volume_size: 10  # In GB
+            delete_on_termination: true
+            volume_type: gp2
+      register: ec2
+

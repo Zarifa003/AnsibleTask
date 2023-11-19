@@ -1,0 +1,8 @@
+---
+- hosts: databaseservers
+  roles:
+    - database-server
+
+- hosts: webservers
+  roles:
+    - web-application

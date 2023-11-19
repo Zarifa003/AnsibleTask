@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Data</title>
+</head>
+<body>
+    <h1>Data from Database</h1>
+    <div id="data"></div>
+
+    <script>
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const dataDiv = document.getElementById('data');
+                data.forEach(item => {
+                    dataDiv.innerHTML += `<p>${item.name}: ${item.value}</p>`;
+                });
+            });
+    </script>
+</body>
+</html>
