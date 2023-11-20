@@ -1,21 +1,27 @@
 ---
-- name: Deploy Node.js Application to EC2 Instance
+- name: Deploy Docker Container
   hosts: ec2_instances
-  become: yes  # Assuming you need root privileges for some operations
+  become: yes
+  gather_facts: yes  # Gather facts to identify the Python interpreter
+
   tasks:
-    - name: Transfer application code to EC2 instance
-      ansible.builtin.copy:
-        src: /etc/ansible/ansibletask/
-        dest: /home/ec2-user/mynodeapp/
-        recursive: yes
+    - name: Install pip3
+      become: yes
+      dnf:
+        name: python3-pip
+        state: present
 
-    - name: Install npm dependencies
-      ansible.builtin.shell:
-        cmd: npm install
-        chdir: /home/ec2-user/mynodeapp
+    - name: Install Docker Python Library
+      pip:
+        name: docker
 
-    - name: Start Node.js application
-      ansible.builtin.shell:
-        cmd: nohup node server.js > app.log 2>&1 &
-        chdir: /home/ec2-user/mynodeapp
+    - name: Pull the Docker image
+      community.docker.docker_image:
+        name: "zarifa003/ansibletask:0.0.1"
+        source: pull
 
+    - name: Run the Docker container
+      community.docker.docker_container:
+        name: "my_ansibletask_app"
+        image: "zarifa003/ansibletask:0.0.1"
+        state: started
