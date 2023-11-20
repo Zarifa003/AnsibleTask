@@ -15,6 +15,8 @@ I wrote simple CRUD application in node.js with POST and GET requests and MySQL 
 
 Then, started the MySQL server and ensured it is running. Runned ‘node server.js’, Opened a web browser and go to http://localhost:3000/index.html and [http://localhost:3000/](http://localhost:3000/index.html)form.html to view data.
 
+![image](https://github.com/Zarifa003/AnsibleTask/assets/94198223/bcc0241a-cbc1-4b02-b895-04b351c510b6)
+
 ![image](https://github.com/Zarifa003/AnsibleTask/assets/94198223/025e0956-44f6-423f-9df3-0a30eca224cf)
 
 ![image](https://github.com/Zarifa003/AnsibleTask/assets/94198223/1720592b-b432-4347-b355-e64da5dd243f)
