@@ -1,0 +1,21 @@
+---
+- name: Install MariaDB Server
+  dnf:
+    name: mariadb105-server
+    state: present
+
+- name: Find files in MariaDB data directory
+  find:
+    paths: /var/lib/mysql
+    file_type: any
+  register: mariadb_data_dir_contents
+
+- name: Initialize MariaDB Database
+  command: mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+  when: mariadb_data_dir_contents.matched == 0
+
+- name: Enable and start MariaDB service
+  systemd:
+    name: mariadb
+    enabled: yes
+    state: started
